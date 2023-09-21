@@ -181,3 +181,5 @@ RDP available via external NIC. If put only on admin NIC, you could use VNC with
 ```
 socat TCP-LISTEN:5500 EXEC:'ssh cn06 "socat STDIO UNIX-CONNECT:/zones/cb733c87-5b5f-e0d5-feef-ff42c6519117/root/tmp/vm.vnc"'
 ```
+
+C:\Windows\System32\Sysprep\sysprep.exe /generalize /oobe /mode:vm /reboot /unattend:C:\AutoUnattend.xml
