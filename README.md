@@ -63,32 +63,68 @@ pfexec /usr/sbin/bhyve -c 2 -m 3G -H \
 And wait for bhyve to terminate again. It will take a while, but not as long
 as the first phase.
 
-Now we create our image:
+Run the previous command again and you should be logged in as Administrator. Run a cmd windows as Administrator and run
 
 ```
-zfs send zones/windows | tee /zones/stuff/windows.zvol | digest -a sha1
+winrm quickconfig -q
+\Windows\System32\Sysprep\sysprep /quiet /generalize /oobe /mode:vm /unattend:D:\Autounattend.xml
+```
+The instance will shutdown. Restart with the same command again and the instance will shutdown after a short time again.
+
+We're now ready to create the image:
+
+```
+zfs send zones/windows > /zones/stuff/windows.zvol
+gzip /zones/stuff/windows.zvol
 zfs destroy zones/windows
 /usr/sbin/bhyvectl --destroy --vm=windows
-ls -l /zones/stuff/windows.zvol
 ```
 
-Using the SHA1 hash and byte size from `ls -l`, create file called `windows.imgmanifest` and put the following in it
+Create an image manifest
 
 ```
 {
     "v": 2,
-    "uuid": "738dccbc-b1b6-11e8-bd8a-ab7098639442",
-    "name": "windows-installing",
-    "version": "0.0.1",
+    "uuid": "<new-uuid>",
+    "name": "windows-<version>",
+    "owner": "<admin-uuid>",
+    "version": "1.0.0",
+    "state": "active",
+    "disabled": false,
+    "public": true,
     "type": "zvol",
     "os": "windows",
     "files": [ {
-        "sha1": "<windows.zvol SHA1 hash>",
-        "size": <file size in byves>,
-        "compression": "none"
-    } ]
+        "sha1": "<files.sha1>",
+        "size": <files.size>,
+        "compression": "gzip"
+    } ],
+    "requirements": {
+        "networks": [ {
+            "name": "net0",
+            "description": "public"
+        } ],
+        "ssh_key": true
+    },
+    "generate_passwords": "true",
+    "users": [ {
+      "name": "administrator"
+    } ],
+    "image_size": "<image-size>",
+    "disk_driver": "virtio",
+    "nic_driver": "virtio",
+    "cpu_type": "host"
 }
 ```
+where:
+| Field | Command |
+| :--- | :--- |
+| new-uuid | `uuid` |
+| files.sha1 | `sum -x sha1 /path/to/zvol.gz \| cut -d' ' -f1` |
+| files.size | `ls -l /path/to/zvol.gz \| awk '{ print $5 }'` |
+| owner-uuid | `sdc-ldap s 'login=admin' \| grep ^uuid \| cut -d' ' -f2` |
+| image-size | Size ypu want for C drive for instances created from this image in MiB (89120 is a good size) |
+
 
 Then:
 
