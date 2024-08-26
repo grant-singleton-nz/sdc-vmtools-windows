@@ -149,12 +149,20 @@
                     <Order>5</Order>
                     <Path>xcopy D:\bin\* C:\smartdc\bin /s /i /y</Path>
                 </RunSynchronousCommand>
-                <RunSynchronousCommand wcm:action="add">
+                <RunSynchronousCommand>
                     <Order>6</Order>
+                    <Path>winrm quickconfig -quiet</Path>
+                </RunSynchronousCommand>
+                <RunSynchronousCommand>
+                    <Order>7</Order>
+                    <Path>powershell -WindowStyle Hidden -Command "Set-NetConnectionProfile -NetworkCategory Private"</Path>
+                </RunSynchronousCommand>
+                <RunSynchronousCommand wcm:action="add">
+                    <Order>8</Order>
                     <Path>SchTasks /create /f /ru SYSTEM /sc ONSTART /tn "Setup Networking" /tr "powershell.exe -file c:\smartdc\bin\enable_networking.ps1"</Path>
                 </RunSynchronousCommand>
                 <RunSynchronousCommand wcm:action="add">
-                    <Order>7</Order>
+                    <Order>9</Order>
                     <Path>SchTasks /create /f /ru SYSTEM /sc ONSTART /tn "Check if preparing disk image" /tr "powershell.exe -file c:\smartdc\bin\prepare_image_runner.ps1"</Path>
                 </RunSynchronousCommand>
             </RunSynchronous>

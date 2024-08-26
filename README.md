@@ -46,8 +46,6 @@ Now wait until bhyve terminates, which will take some time.
 
 When bhyve terminates, run it again, but without the `WINDOWS_INSTALL_CD` line:
 
-For Windows Server 2016 / 2019 and Windows 10:
-
 ```
 pfexec /usr/sbin/bhyve -c 2 -m 3G -H \
     -l com1,stdio \
@@ -62,14 +60,6 @@ pfexec /usr/sbin/bhyve -c 2 -m 3G -H \
 
 And wait for bhyve to terminate again. It will take a while, but not as long
 as the first phase.
-
-Run the previous command again and you should be logged in as Administrator. Run a cmd windows as Administrator and run
-
-```
-winrm quickconfig -q
-\Windows\System32\Sysprep\sysprep /quiet /generalize /oobe /mode:vm /unattend:D:\Autounattend.xml
-```
-The instance will shutdown. Restart with the same command again and the instance will shutdown after a short time again.
 
 We're now ready to create the image:
 
