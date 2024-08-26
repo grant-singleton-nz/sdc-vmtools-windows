@@ -19,7 +19,7 @@ Signature="$Windows NT$"
 Class=SCSIAdapter
 ClassGUID={4D36E97B-E325-11CE-BFC1-08002BE10318}
 Provider=%VENDOR%
-DriverVer = 07/15/2024,100.95.104.26200
+DriverVer = 02/25/2024,100.94.104.24800
 CatalogFile=viostor.cat
 DriverPackageType = PlugAndPlay
 DriverPackageDisplayName = %VioStorScsi.DeviceDesc%
@@ -39,6 +39,7 @@ viostor.sys = 1,,
 ;ExcludeFromSelect = *
 
 [DestinationDirs]
+DefaultDestDir = 10
 viostor_Files_Driver = 12
 
 ;
@@ -46,9 +47,9 @@ viostor_Files_Driver = 12
 ;
 
 [Manufacturer]
-%VENDOR%   = VioStor,NTamd64.10.0
+%VENDOR%   = VioStor,NTamd64.6.3
 
-[VioStor.NTamd64.10.0]
+[VioStor.NTamd64.6.3]
 %VioStorScsi.DeviceDesc% = scsi_inst, PCI\VEN_1AF4&DEV_1001&SUBSYS_00021AF4&REV_00, PCI\VEN_1AF4&DEV_1001
 %VioStorScsi.DeviceDesc% = scsi_inst, PCI\VEN_1AF4&DEV_1042&SUBSYS_11001AF4&REV_01, PCI\VEN_1AF4&DEV_1042
 
