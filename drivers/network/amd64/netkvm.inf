@@ -25,9 +25,9 @@ DriverPackageDisplayName = %kvmnet6.DeviceDesc%
 PnpLockDown=1
 
 [Manufacturer]
-%VENDOR% = NetKVM, NTamd64.10.0...16299
+%VENDOR% = NetKVM, NTamd64.10.0
 
-[NetKVM.NTamd64.10.0...16299]
+[NetKVM.NTamd64.10.0]
 %kvmnet6.DeviceDesc%    = kvmnet6.ndi, PCI\VEN_1AF4&DEV_1000&SUBSYS_00011AF4&REV_00, PCI\VEN_1AF4&DEV_1000
 %kvmnet6.DeviceDesc%    = kvmnet6.ndi, PCI\VEN_1AF4&DEV_1041&SUBSYS_11001AF4&REV_01, PCI\VEN_1AF4&DEV_1041
 
@@ -223,7 +223,7 @@ DisplayName     = %kvmnet6.Service.DispName%
 ServiceType     = 1 ;%SERVICE_KERNEL_DRIVER%
 StartType       = 3 ;%SERVICE_DEMAND_START%
 ErrorControl    = 1 ;%SERVICE_ERROR_NORMAL%
-ServiceBinary   = %13%\netkvm.sys
+ServiceBinary   = %12%\netkvm.sys
 LoadOrderGroup  = NDIS
 AddReg          = TextModeFlags.Reg
 
@@ -247,7 +247,7 @@ netkvm.sys  = 1,,
 netkvmp.exe = 1,,
 
 [DestinationDirs]
-kvmnet6.CopyFiles = 13
+kvmnet6.CopyFiles = 12
 netkvmp.CopyFiles = 11
 
 [Strings]
@@ -350,10 +350,3 @@ HKR, Ndi\params\*UsoIPv6,        Default,              0, "1"
 HKR, Ndi\params\*UsoIPv6,        Optional,             0, "0"
 HKR, Ndi\params\*UsoIPv6\enum,   "0",                  0, "Disabled"
 HKR, Ndi\params\*UsoIPv6\enum,   "1",                  0, "Enabled"
-
-HKR, Ndi\params\*NdisPoll,       ParamDesc,            0, "Ndis Poll Mode"
-HKR, Ndi\params\*NdisPoll,       Type,                 0, "enum"
-HKR, Ndi\params\*NdisPoll,       Default,              0, "1"
-HKR, Ndi\params\*NdisPoll,       Optional,             0, "0"
-HKR, Ndi\params\*NdisPoll\enum,  "0",                  0, "Disabled"
-HKR, Ndi\params\*NdisPoll\enum,  "1",                  0, "Enabled"
