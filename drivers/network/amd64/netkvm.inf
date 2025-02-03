@@ -1,5 +1,5 @@
 ;-------------------------------------------------------------------------------
-;Copyright (c) 2008-2021 Red Hat Inc.
+;Copyright (c) 2008-2023 Red Hat Inc.
 ;
 ;
 ;Module Name:
@@ -19,7 +19,7 @@ Class       = Net
 CatalogFile = netkvm.cat
 ClassGUID   = {4d36e972-e325-11ce-bfc1-08002be10318}
 Provider=%VENDOR%
-DriverVer = 10/21/2024,100.100.104.26600
+DriverVer = 07/15/2024,100.95.104.26200
 DriverPackageType = PlugAndPlay
 DriverPackageDisplayName = %kvmnet6.DeviceDesc%
 PnpLockDown=1
