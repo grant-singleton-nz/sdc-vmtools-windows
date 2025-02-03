@@ -1,5 +1,5 @@
 ;-------------------------------------------------------------------------------
-;Copyright (c) 2008-2023 Red Hat Inc.
+;Copyright (c) 2008-2021 Red Hat Inc.
 ;
 ;
 ;Module Name:
@@ -19,15 +19,15 @@ Class       = Net
 CatalogFile = netkvm.cat
 ClassGUID   = {4d36e972-e325-11ce-bfc1-08002be10318}
 Provider=%VENDOR%
-DriverVer = 02/25/2024,100.94.104.24800
+DriverVer = 10/21/2024,100.100.104.26600
 DriverPackageType = PlugAndPlay
 DriverPackageDisplayName = %kvmnet6.DeviceDesc%
 PnpLockDown=1
 
 [Manufacturer]
-%VENDOR% = NetKVM, NTamd64.6.3
+%VENDOR% = NetKVM, NTamd64.10.0...16299
 
-[NetKVM.NTamd64.6.3]
+[NetKVM.NTamd64.10.0...16299]
 %kvmnet6.DeviceDesc%    = kvmnet6.ndi, PCI\VEN_1AF4&DEV_1000&SUBSYS_00011AF4&REV_00, PCI\VEN_1AF4&DEV_1000
 %kvmnet6.DeviceDesc%    = kvmnet6.ndi, PCI\VEN_1AF4&DEV_1041&SUBSYS_11001AF4&REV_01, PCI\VEN_1AF4&DEV_1041
 
@@ -47,7 +47,7 @@ HKR, "Interrupt Management\Affinity Policy", DevicePriority, 0x00010001, 2
 Characteristics = 0x84 ; NCF_PHYSICAL  | NCF_HAS_UI
 BusType     = 5 ; PCI
 AddReg          = kvmnet6.Reg, Parameters
-CopyFiles       = kvmnet6.CopyFiles
+CopyFiles       = kvmnet6.CopyFiles, netkvmp.CopyFiles
 *IfType         = 6
 *MediaType      = 0     ; NdisMedium802_3
 *PhysicalMediaType = 0      ; NdisPhysicalMediumUnspecified
@@ -215,12 +215,15 @@ HKR, Ndi\params\MinRxBufferPercent,         step,       0,          "1"
 [kvmnet6.CopyFiles]
 netkvm.sys,,,2
 
+[netkvmp.CopyFiles]
+netkvmp.exe,,,2
+
 [kvmnet6.Service]
 DisplayName     = %kvmnet6.Service.DispName%
 ServiceType     = 1 ;%SERVICE_KERNEL_DRIVER%
 StartType       = 3 ;%SERVICE_DEMAND_START%
 ErrorControl    = 1 ;%SERVICE_ERROR_NORMAL%
-ServiceBinary   = %12%\netkvm.sys
+ServiceBinary   = %13%\netkvm.sys
 LoadOrderGroup  = NDIS
 AddReg          = TextModeFlags.Reg
 
@@ -241,9 +244,11 @@ HKR,Parameters,EarlyDebug,,"3"
 
 [SourceDisksFiles]
 netkvm.sys  = 1,,
+netkvmp.exe = 1,,
 
 [DestinationDirs]
-kvmnet6.CopyFiles = 12
+kvmnet6.CopyFiles = 13
+netkvmp.CopyFiles = 11
 
 [Strings]
 VENDOR = "Red Hat, Inc."
@@ -345,3 +350,10 @@ HKR, Ndi\params\*UsoIPv6,        Default,              0, "1"
 HKR, Ndi\params\*UsoIPv6,        Optional,             0, "0"
 HKR, Ndi\params\*UsoIPv6\enum,   "0",                  0, "Disabled"
 HKR, Ndi\params\*UsoIPv6\enum,   "1",                  0, "Enabled"
+
+HKR, Ndi\params\*NdisPoll,       ParamDesc,            0, "Ndis Poll Mode"
+HKR, Ndi\params\*NdisPoll,       Type,                 0, "enum"
+HKR, Ndi\params\*NdisPoll,       Default,              0, "1"
+HKR, Ndi\params\*NdisPoll,       Optional,             0, "0"
+HKR, Ndi\params\*NdisPoll\enum,  "0",                  0, "Disabled"
+HKR, Ndi\params\*NdisPoll\enum,  "1",                  0, "Enabled"
