@@ -1,6 +1,12 @@
 # Create a windows image from an ISO on SmartOS/bhyve
 
 Create an ISO from this repo, and upload to a node. Use your favourite ISO creation tool, If you're using genisoimage the command is. Lets assume you're uploading to /zones/stuff on the node
+
+---
+**_IMPORTANT_**: Replace PASSWORD with the actual Administrator password in Autounattend.xml file (2 occurances)
+
+---
+
 ```
 genisoimage -o ../windows-virtio.iso -J -R -m .git -m README.md .
 ```
@@ -130,3 +136,14 @@ You can now create in instance from the image.
 - copy the .cat, .inf and .sys files from D:\viostor\2k22\amd64 to drivers/disk/amd64
 - copy the .cat, .inf and .sys files from D:\NetKVM\2k22\amd64 to drivers/network/amd64
 Replace `2k22` with the version of windows you're using
+
+## Windows Setup Process
+- First boot - windowsPE and offlineServicing
+    - partition disks
+    - copy OS to disk
+- Second boot - specialize
+    -
+- Third boot - oobe
+- Fourth boot - generalize
+
+Next boot is the VM instance creation - oobe
