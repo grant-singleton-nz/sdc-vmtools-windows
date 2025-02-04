@@ -62,4 +62,7 @@ foreach ($nic in $nics) {
     if ($nic.primary -and $resolvers.length -gt 0) {
         Set-DNSClientServerAddress -InterfaceIndex $adapter.ifIndex -ServerAddresses $resolvers
     }
+
+    # Hopefully this stops the OS asking the discoverable question during OOBE pass
+    Get-NetConnectionProfile -InterfaceIndex $adapter.ifIndex | Set-NetConnectionProfile -NetworkCategory Private
 }

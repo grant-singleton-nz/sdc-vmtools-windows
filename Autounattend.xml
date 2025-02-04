@@ -149,13 +149,13 @@
                     <Order>5</Order>
                     <Path>xcopy D:\bin\* C:\smartdc\bin /s /i /y</Path>
                 </RunSynchronousCommand>
-                <RunSynchronousCommand>
+                <RunSynchronousCommand wcm:action="add">
                     <Order>6</Order>
-                    <Path>winrm quickconfig -quiet</Path>
+                    <Path>cmd.exe /c powershell.exe Enable-PSRemoting -Force</Path>
                 </RunSynchronousCommand>
-                <RunSynchronousCommand>
+                <RunSynchronousCommand wcm:action="add">
                     <Order>7</Order>
-                    <Path>powershell -WindowStyle Hidden -Command "Set-NetConnectionProfile -NetworkCategory Private"</Path>
+                    <Path>reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows NT\CurrentVersion\NetworkList\Signatures\FirstNetwork" /v Category /t REG_DWORD /d 1 /f</Path>
                 </RunSynchronousCommand>
                 <RunSynchronousCommand wcm:action="add">
                     <Order>8</Order>
@@ -164,10 +164,6 @@
                 <RunSynchronousCommand wcm:action="add">
                     <Order>9</Order>
                     <Path>SchTasks /create /f /ru SYSTEM /sc ONSTART /tn "Check if preparing disk image" /tr "powershell.exe -file c:\smartdc\bin\prepare_image_runner.ps1"</Path>
-                </RunSynchronousCommand>
-                <RunSynchronousCommand wcm:action="add">
-                    <Order>10</Order>
-                    <Path>SchTasks /create /f /ru SYSTEM /sc ONCE /st 00:00 /tn "First Boot Reset" /tr "powershell.exe -ExecutionPolicy Bypass -file c:\smartdc\bin\first_boot_reset.ps1" /z /DEPENDON "Setup Networking" /DEPENDON "Check if preparing disk image"</Path>
                 </RunSynchronousCommand>
             </RunSynchronous>
         </component>
