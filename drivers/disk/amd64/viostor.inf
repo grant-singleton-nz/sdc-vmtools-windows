@@ -1,6 +1,6 @@
 ;/*++
 ;
-;Copyright (c) 2008-2023 Red Hat Inc.
+;Copyright (c) 2008-2021 Red Hat Inc.
 ;
 ;
 ;Module Name:
@@ -19,7 +19,7 @@ Signature="$Windows NT$"
 Class=SCSIAdapter
 ClassGUID={4D36E97B-E325-11CE-BFC1-08002BE10318}
 Provider=%VENDOR%
-DriverVer = 07/15/2024,100.95.104.26200
+DriverVer = 10/21/2024,100.100.104.26600
 CatalogFile=viostor.cat
 DriverPackageType = PlugAndPlay
 DriverPackageDisplayName = %VioStorScsi.DeviceDesc%
@@ -91,6 +91,7 @@ HKR,,TypesSupported,%REG_DWORD%,7
 [pnpsafe_pci_addreg]
 HKR, "Parameters\PnpInterface", "5", %REG_DWORD%, 0x00000001
 HKR, "Parameters", "BusType", %REG_DWORD%, 0x00000001
+HKR, "Parameters", DmaRemappingCompatible,0x00010001,0
 
 [pnpsafe_pci_addreg_msix]
 HKR, "Interrupt Management",, 0x00000010
